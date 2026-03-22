@@ -1,0 +1,1 @@
+DROP TABLE IF EXISTS `mc_guestbook_entries`;

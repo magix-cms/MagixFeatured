@@ -1,0 +1,13 @@
+{
+  "name": "MagixFeatured",
+  "version": "1.0.0",
+  "author": "Magix CMS",
+  "type": "widget",
+  "has_config": true,
+  "core_targets": {
+    "home": 1
+  },
+  "default_hooks": [
+    "displayHomeBottom"
+  ]
+}
