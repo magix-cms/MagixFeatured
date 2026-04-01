@@ -12,6 +12,13 @@ class FrontendController
 {
     public static function renderWidget(array $params = []): string
     {
+        // 🟢 1. SÉCURITÉ / AIGUILLAGE
+        $hookName = $params['name'] ?? '';
+        if (!str_starts_with($hookName, 'displayHome')) {
+            return '';
+        }
+
+        // 🟢 2. TRAITEMENT NORMAL
         try {
             $view = SmartyTool::getInstance('front');
 
@@ -28,7 +35,6 @@ class FrontendController
 
             if (empty($productIds)) return '';
 
-            // Sécurité : Vérifier que la méthode existe dans ProductDb
             if (!method_exists(ProductDb::class, 'getProductsByIds')) {
                 return '';
             }
@@ -40,7 +46,6 @@ class FrontendController
 
             $formattedProducts = [];
             foreach ($rawProducts as $row) {
-                // 🟢 AJOUT DES PARAMÈTRES MANQUANTS POUR LE PRESENTER
                 $formatted = ProductPresenter::format($row, $currentLang, $siteUrl, $companyInfo, $skinFolder, $mcSettings);
                 if ($formatted) {
                     $formattedProducts[] = $formatted;
@@ -49,11 +54,8 @@ class FrontendController
 
             $view->assign('featured_products', $formattedProducts);
 
-            // 🟢 CORRECTION DU NOM DU DOSSIER
             $templatePath = ROOT_DIR . 'plugins/MagixFeaturedProduct/views/front/widget.tpl';
-            if (!file_exists($templatePath)) {
-                return '';
-            }
+            if (!file_exists($templatePath)) return '';
 
             return $view->fetch($templatePath);
 

@@ -10,10 +10,10 @@ class Boot
     public function register(): void
     {
         // On passe bien les 3 arguments attendus par votre HookManager !
-        HookManager::register(
+        /*HookManager::register(
             'displayHomeBottom',
             'MagixFeaturedProduct',
             [\Plugins\MagixFeaturedProduct\src\FrontendController::class, 'renderWidget']
-        );
+        );*/
     }
 }
